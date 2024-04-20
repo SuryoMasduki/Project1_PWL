@@ -1,7 +1,10 @@
 <section id="header">
     <header class="container">
         <nav class="d-flex justify-content-end py-2">
-            <a type="button" class="btn button-nav">Sign-up</a>
+            <form action=" {{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn button-nav">Log Out</a>
+            </form>
         </nav>
     </header>
 </section>
