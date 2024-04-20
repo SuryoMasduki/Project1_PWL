@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function() {
-    return view('home');
-})->middleware('auth');
+Route::get('/home', [HomeController::class, 'home'])->middleware('auth')->name('home');
+
+Route::post('/users/courses/code', [CourseController::class, 'addCourseByCode'])->middleware('auth')->name('addCourseByCode');
+
+Route::post('/users/courses/{course}', [CourseController::class, 'addCourse'])->middleware('auth')->name('addCourse');
+Route::delete('/users/courses/{course}', [CourseController::class, 'deleteCourse'])->middleware('auth')->name('deleteCourse');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
+            'id' => 1,
             'name' => 'test',
             'nim' => '123412341234',
             'email' => 'test@test.com',
@@ -30,10 +32,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Course::create([
+            'id' => 1,
             'name' => 'Basic Programming',
             'code' => 'BP',
             'credit' => 3,
             'department_id' => 1
         ]);
+
+        DB::table('course_user')->insert([
+            'course_id' => 1,
+            'user_id' => 1
+        ]);
+
     }
 }
