@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('courses', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('code')->unique();
-            $table->integer('credit');
-            $table->foreignId('department_id')->constrained();
-            $table->timestamps();
+            $table->id(); // membuat kolom id
+            $table->string('name'); // membuat kolom dengan nama 'name' dan tipe data varchar
+            $table->string('code')->unique(); // membuat kolom dengan nama 'code', tipe data varchar, dan index unique
+            $table->integer('credit'); // membuat kolom dengan nama 'credit' dan tipe data int
+            $table->foreignId('department_id')->constrained(); // membuat kolom dengan nama 'department_id', tipe data bigint, dan foreign key ke tabel departemen dengan kolom dengan nama id
+            $table->timestamps(); // membuat kolom created_at dan updated_at
         });
     }
 

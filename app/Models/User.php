@@ -44,8 +44,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // digunakan untuk menghubungkan user dengan courses
     public function courses()
     {
+        // untuk mendapatkan course yang diambil suatu user
         return $this->belongsToMany(Course::class);
     }
 }
