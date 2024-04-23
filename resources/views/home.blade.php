@@ -9,7 +9,7 @@
                             @foreach ($errors->get('home') as $error)
                                 {{ $error }}
                             @endforeach
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -27,12 +27,9 @@
                 <div class="col-md-4">
                     <div class="card mt-3">
                         <h2>Add Course</h2>
-                        <button class="btn button-card" data-bs-toggle="modal" data-bs-target="#showAllCourse">Show all
-                            courses
-                        </button>
-                        <button class="btn button-card" data-bs-toggle="modal" data-bs-target="#addByCode">Add by
-                            code
-                        </button>
+                        <a  href="{{ route('addCourseView') }}" class="btn button-card">
+                            AddCourse
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -42,12 +39,14 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
+                                <th>Department</th>
                                 <th>Action</th>
                             </tr>
                             @for ($i = 0; $i < count($userCourses); $i++)
-                                <tr onclick="location.href ='course/detail';">
+                                <tr onclick="location.href ='{{ route('detailCourseView', ['course' => $userCourses[$i]->id]) }}';">
                                     <td>{{ $i + 1 }}</td>
                                     <td>{{ $userCourses[$i]->name }}</td>
+                                    <td>{{ $department->name }}</td>
                                     <td>
                                         <form action="{{ route('deleteCourse', ['course' => $userCourses[$i]->id])}}"
                                               method="POST">

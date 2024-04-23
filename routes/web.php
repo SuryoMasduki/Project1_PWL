@@ -19,20 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/course', function () {
-    return view('course');
-});
-Route::get('/course/detail', function () {
-    return view('detailCourse');
-});
-
-
-Route::get('/home', [HomeController::class, 'home'])->middleware('auth')->name('home');
-
-Route::post('/users/courses/code', [CourseController::class, 'addCourseByCode'])->middleware('auth')->name('addCourseByCode');
-
-Route::post('/users/courses/{course}', [CourseController::class, 'addCourse'])->middleware('auth')->name('addCourse');
-Route::delete('/users/courses/{course}', [CourseController::class, 'deleteCourse'])->middleware('auth')->name('deleteCourse');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -42,6 +28,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/home', [HomeController::class, 'home'])->middleware('auth')->name('home');
+
+    Route::get('/course', [CourseController::class, "addCourseView"])->name("addCourseView")->middleware('auth');
+    Route::get('/course/{course}', [CourseController::class, "detailCourseView"])->name('detailCourseView')->middleware('auth');
+    Route::post('/users/courses/code', [CourseController::class, 'addCourseByCode'])->middleware('auth')->name('addCourseByCode');
+    Route::post('/users/courses/{course}', [CourseController::class, 'addCourse'])->middleware('auth')->name('addCourse');
+    Route::delete('/users/courses/{course}', [CourseController::class, 'deleteCourse'])->middleware('auth')->name('deleteCourse');
 });
 
 require __DIR__ . '/auth.php';

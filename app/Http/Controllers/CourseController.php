@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Department;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,31 @@ use function Laravel\Prompts\error;
 
 class CourseController extends Controller
 {
+    public function detailCourseView(Course $course)
+    {
+        $department = Department::find($course->department_id);
+
+        $data = [
+            "course" => $course,
+            "department" => $department
+        ];
+
+        return view("detailCourse", $data);
+    }
+
+    public function addCourseView()
+    {
+        $user = Auth::user();
+
+        $course = Course::where("department_id", $user->department_id)->get();
+
+        $data = [
+            "course" => $course
+        ];
+
+        return view('course', $data);
+    }
+
     public function addCourse(Course $course)
     {
         $user = Auth::user();
@@ -19,6 +45,10 @@ class CourseController extends Controller
         $isUserJoinCourse = $course->users->find($user->id);
         if ($isUserJoinCourse) {
             return redirect()->route('home')->withErrors(['home' => 'you already join course']);
+        }
+
+        if ($course->department_id != $user->department_id) {
+            return redirect()->route('home')->withErrors(['home' => 'you cannot join the course']);
         }
 
         try {
@@ -36,7 +66,7 @@ class CourseController extends Controller
     }
 
     public function addCourseByCode(Request $request)
-    {   
+    {
         $user = Auth::user();
 
         $course = Course::where('code', $request->courseCode)->first();
@@ -48,6 +78,10 @@ class CourseController extends Controller
         $isUserJoinCourse = $course->users->find($user->id);
         if ($isUserJoinCourse) {
             return redirect()->route('home')->withErrors(['home' => 'you already join course']);
+        }
+
+        if ($course->department_id != $user->department_id) {
+            return redirect()->route('home')->withErrors(['home' => 'you cannot join the course']);
         }
 
         try {
